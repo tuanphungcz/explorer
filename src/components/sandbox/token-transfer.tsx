@@ -29,7 +29,7 @@ export const TokenTransfer = (props: any) => {
   const onSubmit = async ({ senderKey, recipient, amount, memo }: any) => {
     try {
       doStartLoading();
-      console.log('identity', identity);
+
       await dispatch(fetchAccount(identity?.address));
 
       const tx = await makeSTXTokenTransfer({
@@ -39,7 +39,6 @@ export const TokenTransfer = (props: any) => {
         memo,
         network: network(apiServer as string),
       });
-      console.log('tx', tx);
 
       const { payload, error } = await dispatch(
         broadcastTransaction({ principal: identity?.address, tx })
@@ -72,7 +71,6 @@ export const TokenTransfer = (props: any) => {
           <form onSubmit={handleSubmit} method="post">
             <Flex width="100%">
               <Stack spacing="base" maxWidth="560px" width="100%">
-                <Field label="Sender key" name="senderKey" />
                 <Field name="recipient" label="Recipient address" />
                 <Field type="number" name="amount" label="uSTX amount" />
                 <Field name="memo" label="Memo (message)" />
